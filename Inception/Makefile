@@ -1,25 +1,17 @@
-NGINX_DOCKERFILE := ./nginx/Dockerfile
-MARIADB_DOCKERFILE := ./mariadb/Dockerfile
-
-build:
-    @docker-compose build
-
-up:
-    @docker-compose up -d
+all:
+	@docker compose -f ./scrs/docker-compose.yml up -d --build
 
 down:
-    @docker-compose down
+	@docker compose -f ./scrs/docker-compose.yml down
 
-restart:
-    @docker-compose restart
+re:
+	@docker compose -f scrs/docker-compose.yml up -d --build
 
-nginx-logs:
-    @docker-compose logs -f nginx
+clean:
+	@docker stop $$(docker ps -qa);\
+	docker rm $$(docker ps -qa);\
+	docker rmi -f $$(docker images -qa);\
+	docker volume rm $$(docker volume ls -q);\
+	docker network rm $$(docker network ls -q);\
 
-mariadb-logs:
-    @docker-compose logs -f mariadb
-
-wordpress-logs:
-    @docker-compose logs -f wordpress
-
-.PHONY: build up down restart nginx-logs mariadb-logs wordpress-logs
+.PHONY: all re down clean
