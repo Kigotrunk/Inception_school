@@ -1,11 +1,11 @@
 all:
-	@docker compose -f ./scrs/docker-compose.yml up -d --build
+	@docker-compose -f srcs/docker-compose.yaml up -d --build
 
 down:
-	@docker compose -f ./scrs/docker-compose.yml down
+	@docker-compose -f srcs/docker-compose.yaml down
 
 re:
-	@docker compose -f scrs/docker-compose.yml up -d --build
+	@docker-compose -f srcs/docker-compose.yaml up -d --build
 
 clean:
 	@docker stop $$(docker ps -qa);\
